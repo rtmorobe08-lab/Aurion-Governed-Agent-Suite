@@ -1,0 +1,6 @@
+{
+  "allowed_channels": ["WHATSAPP", "EMAIL"],
+  "prohibited_actions": ["PROCESS_REFUND_WITHOUT_TOKEN", "ALTER_PRICING", "COMMIT_LEGAL_TERMS"],
+  "escalation_keywords": ["LEGAL", "COMPLAINT", "POPIA_REQUEST", "REFUND_CLAIM"],
+  "popia_pii_redaction": true
+}
