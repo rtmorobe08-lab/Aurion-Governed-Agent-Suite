@@ -1,0 +1,9 @@
+{
+  "agent_id": "AGENT-01-FRONT-OF-HOUSE",
+  "owner_entity": "Aha Holdings (Pty) Ltd / Client Practice",
+  "tier": "Starter",
+  "max_spend_limit_zar": 2500.00,
+  "data_boundary": "za-jnb-1",
+  "human_approval_gates": true,
+  "kill_switch_endpoint": "/api/v2/enforcement/kill-switch"
+}
