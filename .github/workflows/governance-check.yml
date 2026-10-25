@@ -1,0 +1,36 @@
+name: Aurion Governance Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-suite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate JSON Schemas
+        run: |
+          echo "Checking JSON schema syntax in core directory..."
+          for file in core/*.json; do
+            if [ -f "$file" ]; then
+              jq . "$file" > /dev/null && echo "Valid JSON: $file"
+            fi
+          done
+
+      - name: Verify Agent Modules Exist
+        run: |
+          echo "Verifying all 6 operational agents are present..."
+          required_agents=("front_of_house" "connector" "bookkeeper" "inventory_payroll" "paperwork" "watchtower")
+          for agent in "${required_agents[@]}"; do
+            if [ -d "agents/$agent" ]; then
+              echo "Found agent module: $agent"
+            else
+              echo "Missing required agent module: $agent"
+              exit 1
+            fi
+          done
