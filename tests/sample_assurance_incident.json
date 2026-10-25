@@ -1,0 +1,7 @@
+{
+  "incident_id": "INC-2026-1026-001",
+  "agent_name": "watchtower",
+  "severity_level": "MEDIUM",
+  "human_gate_status": "PENDING_REVIEW",
+  "timestamp": "2026-10-26T01:06:00Z"
+}
