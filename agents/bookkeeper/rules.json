@@ -1,7 +1,0 @@
-{
-  "vat_standard_rate": 0.15,
-  "auto_approve_under_zar": 1000.00,
-  "require_human_gate_above_zar": 1000.00,
-  "allowed_document_types": ["INVOICE_PDF", "BANK_STATEMENT_CSV", "TAX_RECEIPT"],
-  "popia_data_minimisation": true
-}
