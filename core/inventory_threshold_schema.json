@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AurionInventoryThresholdRecord",
+  "type": "object",
+  "properties": {
+    "item_id": {
+      "type": "string",
+      "description": "Unique SKU or stock item identifier."
+    },
+    "agent_name": {
+      "type": "string",
+      "const": "inventory_payroll",
+      "description": "Restricted strictly to the Inventory & Payroll agent module."
+    },
+    "current_stock_level": {
+      "type": "integer",
+      "description": "Current physical quantity available in stock."
+    },
+    "reorder_threshold": {
+      "type": "integer",
+      "description": "Minimum stock level that triggers an automated reorder alert."
+    },
+    "restock_required": {
+      "type": "boolean",
+      "description": "Flag indicating whether stock has breached the minimum threshold."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 compliant UTC timestamp of the inventory check."
+    }
+  },
+  "required": ["item_id", "agent_name", "current_stock_level", "reorder_threshold", "restock_required", "timestamp"]
+}
