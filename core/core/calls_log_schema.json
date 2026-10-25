@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AurionCallsLogRecord",
+  "type": "object",
+  "properties": {
+    "call_id": { "type": "string" },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "direction": { "type": "string", "enum": ["inbound", "outbound", "callback"] },
+    "lane": { "type": "string" },
+    "caller_name": { "type": "string" },
+    "caller_phone": { "type": "string" },
+    "caller_company": { "type": "string" },
+    "reason_for_call": { "type": "string" },
+    "disposition": { "type": "string" },
+    "assigned_to": { "type": "string" },
+    "promised_action": { "type": "string" },
+    "disclosure_given": { "type": "boolean" },
+    "retention_until": { "type": "string", "format": "date" }
+  },
+  "required": ["call_id", "timestamp", "direction", "lane", "caller_phone", "reason_for_call", "disposition", "disclosure_given"]
+}
