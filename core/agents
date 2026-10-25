@@ -1,0 +1,37 @@
+# 1. Create the 6 clean agent subdirectories under agents/
+mkdir -p agents/front_of_house
+mkdir -p agents/connector
+mkdir -p agents/bookkeeper
+mkdir -p agents/inventory_payroll
+mkdir -p agents/paperwork
+mkdir -p agents/watchtower
+
+# 2. Add an introductory README to each agent module detailing its core mandate
+echo "# Front of House Agent (Agent 01)
+- Mandate: Queries, bookings, ticketing, and automated closing reviews.
+- Guardrails: POPIA disclosure, strict call lanes, and automated callbacks." > agents/front_of_house/README.md
+
+echo "# Connector Agent (Agent 02)
+- Mandate: Wires cross-departmental tools together.
+- Guardrails: Single triggers executing end-to-end chains without manual retyping." > agents/connector/README.md
+
+echo "# Bookkeeper Agent (Agent 03)
+- Mandate: Automated invoices, bank reconciliations, and complete VAT preparation.
+- Guardrails: Governed financial audit trails." > agents/bookkeeper/README.md
+
+echo "# Inventory & Payroll Agent (Agent 04)
+- Mandate: Stock triggers, EMP201 processing, and payroll workflows.
+- Guardrails: Human-gated approval checkpoints." > agents/inventory_payroll/README.md
+
+echo "# Paperwork Agent (Agent 05)
+- Mandate: Proposals, operational reports, and KYC/FICA client intake.
+- Guardrails: Standardized document generation and secure filing." > agents/paperwork/README.md
+
+echo "# Watchtower Executive Intelligence Agent (Agent 06)
+- Mandate: 07:00 AM executive briefs and real-time anomaly alerts.
+- Guardrails: Role-tailored multi-channel distribution (WhatsApp/Slack/PDF)." > agents/watchtower/README.md
+
+# 3. Stage, commit, and push the new 6-agent directory structure to GitHub
+git add agents/
+git commit -m "feat: Insert the 6 governed agent directories for the Aurion Agent Suite"
+git push origin main
