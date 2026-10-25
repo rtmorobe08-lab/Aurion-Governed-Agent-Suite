@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AurionAgentAssuranceRegister",
+  "type": "object",
+  "properties": {
+    "incident_id": {
+      "type": "string",
+      "description": "Unique cryptographic or sequential identifier for the logged event."
+    },
+    "agent_name": {
+      "type": "string",
+      "enum": ["front_of_house", "connector", "bookkeeper", "inventory_payroll", "paperwork", "watchtower"],
+      "description": "The specific operational agent module logging or triggering the event."
+    },
+    "severity_level": {
+      "type": "string",
+      "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"],
+      "description": "Operational impact or anomaly severity score."
+    },
+    "human_gate_status": {
+      "type": "string",
+      "enum": ["PENDING_REVIEW", "AUTHORIZED", "REJECTED", "BYPASS_NOT_ALLOWED"],
+      "description": "Status of the mandatory human-in-the-loop checkpoint."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 compliant UTC timestamp of the log event."
+    }
+  },
+  "required": ["incident_id", "agent_name", "severity_level", "human_gate_status", "timestamp"]
+}
