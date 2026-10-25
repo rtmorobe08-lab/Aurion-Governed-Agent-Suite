@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AurionFinancialLedgerRecord",
+  "type": "object",
+  "properties": {
+    "transaction_id": {
+      "type": "string",
+      "description": "Unique identifier for the financial transaction or invoice log."
+    },
+    "agent_name": {
+      "type": "string",
+      "const": "bookkeeper",
+      "description": "Restricted strictly to the Bookkeeper agent module."
+    },
+    "transaction_type": {
+      "type": "string",
+      "enum": ["INVOICE_GENERATION", "BANK_RECONCILIATION", "VAT_PREPARATION", "DISBURSEMENT_REQUEST"],
+      "description": "The category of financial operation."
+    },
+    "amount_zar": {
+      "type": "number",
+      "description": "Monetary value in South African Rand (ZAR)."
+    },
+    "disbursement_authorized": {
+      "type": "boolean",
+      "description": "Flag indicating if explicit human-in-the-loop authorization has been granted for fund movement."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 compliant UTC timestamp of the record."
+    }
+  },
+  "required": ["transaction_id", "agent_name", "transaction_type", "amount_zar", "disbursement_authorized", "timestamp"]
+}
