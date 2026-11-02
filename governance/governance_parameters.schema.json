@@ -1,0 +1,184 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AurionGovernanceParameters",
+  "type": "object",
+  "required": [
+    "parameter_set",
+    "version",
+    "effective_date",
+    "status",
+    "posture",
+    "action_classes",
+    "action_type_map",
+    "global",
+    "agents"
+  ],
+  "properties": {
+    "parameter_set": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DRAFT_FOR_DIRECTOR_RATIFICATION",
+        "RATIFIED",
+        "SUPERSEDED"
+      ]
+    },
+    "posture": {
+      "type": "object",
+      "required": [
+        "default_behaviour"
+      ],
+      "properties": {
+        "default_behaviour": {
+          "type": "string",
+          "enum": [
+            "fail_closed",
+            "fail_open"
+          ]
+        }
+      }
+    },
+    "action_classes": {
+      "type": "object"
+    },
+    "action_type_map": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "global": {
+      "type": "object",
+      "required": [
+        "disclosure",
+        "kill_switch",
+        "audit",
+        "data_protection",
+        "financial",
+        "incident"
+      ]
+    },
+    "agents": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "agent_id",
+          "agent_name",
+          "commercial_tier",
+          "purpose",
+          "action_classes_allowed",
+          "prohibited_actions",
+          "data_classes_allowed",
+          "runtime_governance",
+          "status"
+        ],
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "pattern": "^[a-z_]+$"
+          },
+          "agent_name": {
+            "type": "string"
+          },
+          "hymn": {
+            "type": "string"
+          },
+          "commercial_tier": {
+            "type": "string",
+            "enum": [
+              "Starter",
+              "Growth",
+              "Scale"
+            ]
+          },
+          "repo_module": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "purpose": {
+            "type": "string",
+            "minLength": 20
+          },
+          "action_classes_allowed": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "READ_ONLY",
+                "DRAFT_INTERNAL",
+                "NOTIFY_THEN_ACT",
+                "APPROVE_THEN_ACT",
+                "HUMAN_ONLY"
+              ]
+            },
+            "minItems": 1
+          },
+          "prohibited_actions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "data_classes_allowed": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "active",
+              "canon_pending_module",
+              "retired"
+            ]
+          },
+          "runtime_governance": {
+            "type": "object",
+            "required": [
+              "human_gates_required",
+              "kill_switch_active",
+              "disclosure_required"
+            ],
+            "properties": {
+              "zar_spend_cap_hourly": {
+                "type": "number",
+                "minimum": 0
+              },
+              "zar_spend_cap_daily": {
+                "type": "number",
+                "minimum": 0
+              },
+              "human_gates_required": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "kill_switch_active": {
+                "type": "boolean"
+              },
+              "disclosure_required": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

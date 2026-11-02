@@ -1,0 +1,54 @@
+{
+  "agent_id": "paperwork",
+  "agent_name": "Governed Paperwork",
+  "passport_version": "1.0",
+  "owner": "Aurion Enterprises (Pty) Ltd",
+  "purpose": "Draft compliance documents, briefing memos, policies and correspondence from governed records.",
+  "status": "active",
+  "commercial_tier": "Growth",
+  "data_classes": [
+    "document_content",
+    "client_entity_name",
+    "matter_reference"
+  ],
+  "allowed_actions": [
+    "READ_ONLY",
+    "DRAFT_INTERNAL",
+    "NOTIFY_THEN_ACT",
+    "APPROVE_THEN_ACT"
+  ],
+  "prohibited_actions": [
+    "statutory.filing",
+    "contract.sign",
+    "message.send_new_recipient",
+    "record.delete"
+  ],
+  "approvers": [
+    "DIRECTOR"
+  ],
+  "runtime_governance": {
+    "kill_switch_active": true,
+    "kill_switch_max_seconds": 3,
+    "disclosure_required": true,
+    "human_gates_required": [
+      "external_dispatch",
+      "statutory_or_regulatory_document",
+      "legal_correspondence"
+    ],
+    "zar_spend_cap_hourly": 0,
+    "zar_spend_cap_daily": 0,
+    "model_pinned": "TO_BE_RECORDED_AT_DEPLOYMENT",
+    "prompt_version": "TO_BE_RECORDED_AT_DEPLOYMENT"
+  },
+  "audit": {
+    "register_entry": "AUR-AGENT-PAPERWORK",
+    "retention_years": 5,
+    "logs_appended_only": true
+  },
+  "review": {
+    "owner_attestation": "monthly",
+    "governance_audit": "quarterly",
+    "last_reviewed": null
+  },
+  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
+}

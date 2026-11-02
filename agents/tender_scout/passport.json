@@ -1,0 +1,53 @@
+{
+  "agent_id": "tender_scout",
+  "agent_name": "Tender Scout",
+  "passport_version": "1.0",
+  "owner": "Aurion Enterprises (Pty) Ltd",
+  "purpose": "Scan tender portals and notices, match opportunities to capability and margin, assemble bid packs for review.",
+  "status": "canon_pending_module",
+  "commercial_tier": "Scale",
+  "data_classes": [
+    "tender_reference",
+    "closing_date",
+    "scope_summary",
+    "estimated_value"
+  ],
+  "allowed_actions": [
+    "READ_ONLY",
+    "DRAFT_INTERNAL",
+    "NOTIFY_THEN_ACT"
+  ],
+  "prohibited_actions": [
+    "tender.submit",
+    "contract.sign",
+    "payment.initiate",
+    "record.delete"
+  ],
+  "approvers": [
+    "DIRECTOR"
+  ],
+  "runtime_governance": {
+    "kill_switch_active": true,
+    "kill_switch_max_seconds": 3,
+    "disclosure_required": true,
+    "human_gates_required": [
+      "bid_pack_finalisation",
+      "tender_submission"
+    ],
+    "zar_spend_cap_hourly": 0,
+    "zar_spend_cap_daily": 0,
+    "model_pinned": "TO_BE_RECORDED_AT_DEPLOYMENT",
+    "prompt_version": "TO_BE_RECORDED_AT_DEPLOYMENT"
+  },
+  "audit": {
+    "register_entry": "AUR-AGENT-TENDER_SCOUT",
+    "retention_years": 5,
+    "logs_appended_only": true
+  },
+  "review": {
+    "owner_attestation": "monthly",
+    "governance_audit": "quarterly",
+    "last_reviewed": null
+  },
+  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
+}

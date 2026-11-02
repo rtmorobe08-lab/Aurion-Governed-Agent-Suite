@@ -1,0 +1,528 @@
+{
+  "parameter_set": "aurion-agent-governance",
+  "version": "1.0",
+  "effective_date": "2026-11-02",
+  "status": "DRAFT_FOR_DIRECTOR_RATIFICATION",
+  "entity": "Aurion Enterprises (Pty) Ltd",
+  "registration": "2026/466313/07",
+  "authority": {
+    "director": "R.T. Morobe",
+    "governance_lead": "TO_BE_CONTACTED",
+    "information_officer": "R.T. Morobe",
+    "escalation_channel": "whatsapp",
+    "escalation_number": "+27828800195",
+    "document_owner": "Governance Lead"
+  },
+  "posture": {
+    "default_behaviour": "fail_closed",
+    "principle": "When an agent cannot prove it is allowed to act, it does not act.",
+    "no_silent_failure": true
+  },
+  "action_classes": {
+    "READ_ONLY": {
+      "tier": "T0",
+      "description": "Reads records, computes, drafts nothing external.",
+      "reversible": true
+    },
+    "DRAFT_INTERNAL": {
+      "tier": "T0",
+      "description": "Produces internal drafts not visible outside the organisation.",
+      "reversible": true
+    },
+    "NOTIFY_THEN_ACT": {
+      "tier": "T1",
+      "description": "Acts immediately within caps, notifies the owner. Reversible.",
+      "reversible": true
+    },
+    "APPROVE_THEN_ACT": {
+      "tier": "T2",
+      "description": "Prepares the action and waits for a named human approval.",
+      "reversible": false
+    },
+    "HUMAN_ONLY": {
+      "tier": "T3",
+      "description": "Never executed by an agent. Prepared for a human, at most.",
+      "reversible": false
+    }
+  },
+  "action_type_map": {
+    "record.read": "READ_ONLY",
+    "report.generate": "READ_ONLY",
+    "log.append": "READ_ONLY",
+    "anomaly.detect": "READ_ONLY",
+    "document.draft": "DRAFT_INTERNAL",
+    "message.draft": "DRAFT_INTERNAL",
+    "purchase_order.draft": "DRAFT_INTERNAL",
+    "policy.draft": "DRAFT_INTERNAL",
+    "message.send_known_contact": "NOTIFY_THEN_ACT",
+    "calendar.book_internal": "NOTIFY_THEN_ACT",
+    "ticket.assign": "NOTIFY_THEN_ACT",
+    "purchase_order.issue_under_threshold": "NOTIFY_THEN_ACT",
+    "record.classify": "NOTIFY_THEN_ACT",
+    "brief.deliver": "NOTIFY_THEN_ACT",
+    "message.send_new_recipient": "APPROVE_THEN_ACT",
+    "data.export_external": "APPROVE_THEN_ACT",
+    "record.delete": "APPROVE_THEN_ACT",
+    "price.quote": "APPROVE_THEN_ACT",
+    "contract.issue": "APPROVE_THEN_ACT",
+    "supplier.bank_change": "APPROVE_THEN_ACT",
+    "employee.bank_change": "APPROVE_THEN_ACT",
+    "purchase_order.issue_over_threshold": "APPROVE_THEN_ACT",
+    "video.publish": "APPROVE_THEN_ACT",
+    "payment.initiate": "HUMAN_ONLY",
+    "payment.release": "HUMAN_ONLY",
+    "tender.submit": "HUMAN_ONLY",
+    "statutory.filing": "HUMAN_ONLY",
+    "data.subject_response": "HUMAN_ONLY",
+    "employee.discipline": "HUMAN_ONLY",
+    "credit.decision": "HUMAN_ONLY",
+    "bank_detail.change": "HUMAN_ONLY",
+    "agent.kill_switch_override": "HUMAN_ONLY",
+    "contract.sign": "HUMAN_ONLY"
+  },
+  "global": {
+    "disclosure": {
+      "required_for_external_interaction": true,
+      "voice_template": "Thank you for calling {company}, you are speaking with the office assistant.",
+      "chat_template": "You are speaking with {company}'s AI assistant. A human can take over at any time.",
+      "must_be_recorded_in_log": true,
+      "deception_prohibited": true
+    },
+    "kill_switch": {
+      "max_activation_seconds": 3,
+      "authorised_roles": [
+        "DIRECTOR",
+        "GOVERNANCE_LEAD",
+        "CLIENT_SPONSOR"
+      ],
+      "requires_reauthorisation_to_restart": true,
+      "logs_activation": true,
+      "tested_monthly": true
+    },
+    "audit": {
+      "immutable_log_required": true,
+      "register_is_system_of_record": true,
+      "required_fields": [
+        "agent_id",
+        "passport_version",
+        "timestamp_utc",
+        "action_type",
+        "action_class",
+        "target",
+        "data_classes_touched",
+        "decision_basis",
+        "human_approver_id",
+        "outcome",
+        "reversible"
+      ],
+      "retention_years": 5,
+      "tamper_evidence": "append_only"
+    },
+    "data_protection": {
+      "governing_law": "POPIA Act 4 of 2013",
+      "prohibited_classes": [
+        "special_personal_information",
+        "childrens_data"
+      ],
+      "proceed_without_lawful_basis": false,
+      "cross_border_transfer_default": false,
+      "minimisation": "Capture only the fields needed for the stated purpose.",
+      "dsar_response_days": 30,
+      "recording_retention_days": 90,
+      "deletion_on_request": true
+    },
+    "financial": {
+      "currency": "ZAR",
+      "per_action_cap": 500,
+      "per_hour_cap": 2000,
+      "per_day_cap": 10000,
+      "per_month_cap": 40000,
+      "over_cap_behaviour": "block_and_escalate",
+      "payments_executed_by_agents": false
+    },
+    "rate_limits": {
+      "outbound_messages_per_day": 200,
+      "new_recipients_per_day": 25,
+      "records_modified_per_day": 500,
+      "tool_calls_per_hour": 600,
+      "llm_tokens_per_task": 200000
+    },
+    "incident": {
+      "acknowledge_hours": 24,
+      "report_hours": 72,
+      "severity_matrix": {
+        "CRITICAL": "immediate_escalation_and_kill_switch_review",
+        "HIGH": "24_hour_ack",
+        "MEDIUM": "48_hour_ack",
+        "LOW": "next_review_cycle"
+      },
+      "register_entry_mandatory": true
+    },
+    "change_control": {
+      "passport_version_bump_required": true,
+      "reapproval_required_on": [
+        "scope",
+        "data_classes",
+        "allowed_tools",
+        "spend_caps",
+        "human_gates"
+      ],
+      "model_pinning_required": true,
+      "prompt_version_recorded": true,
+      "silent_model_swap_prohibited": true
+    },
+    "vendor": {
+      "allowlist_required": true,
+      "no_training_on_client_data": true,
+      "dpa_required": true,
+      "documented_opt_out_required": true
+    },
+    "review": {
+      "owner_attestation": "monthly",
+      "governance_audit": "quarterly",
+      "external_audit": "annual",
+      "register_export_for_auditor": true
+    },
+    "evaluation": {
+      "pre_deployment_tests_required": true,
+      "minimum_pass_rate": 100,
+      "test_runner": "run_all_agent_tests.py"
+    },
+    "offboarding": {
+      "checklist": [
+        "revoke_credentials",
+        "deactivate_endpoints",
+        "archive_passport",
+        "close_register_entry",
+        "notify_affected_parties_if_personal_data",
+        "retain_logs_5_years"
+      ]
+    }
+  },
+  "agents": {
+    "front_of_house": {
+      "agent_id": "front_of_house",
+      "agent_name": "Governed Front of House",
+      "hymn": "Never miss a customer.",
+      "commercial_tier": "Starter",
+      "repo_module": "agents/front_of_house",
+      "purpose": "Answer every inbound call, engage the caller, capture details, promise and track callbacks.",
+      "action_classes_allowed": [
+        "READ_ONLY",
+        "DRAFT_INTERNAL",
+        "NOTIFY_THEN_ACT"
+      ],
+      "prohibited_actions": [
+        "price.quote",
+        "contract.issue",
+        "payment.initiate",
+        "data.export_external",
+        "record.delete",
+        "message.send_new_recipient"
+      ],
+      "data_classes_allowed": [
+        "caller_name",
+        "caller_phone",
+        "caller_company",
+        "reason_for_call",
+        "callback_commitment"
+      ],
+      "status": "active",
+      "runtime_governance": {
+        "zar_spend_cap_hourly": 0,
+        "zar_spend_cap_daily": 0,
+        "human_gates_required": [
+          "callback_commitment_over_24h",
+          "quote_request",
+          "complaint_escalation"
+        ],
+        "kill_switch_active": true,
+        "disclosure_required": true
+      },
+      "review_owner": "Governance Lead",
+      "notes": "External-facing: disclosure mandatory on every call. Recording retention 90 days. May promise callbacks, never prices."
+    },
+    "bookkeeper": {
+      "agent_id": "bookkeeper",
+      "agent_name": "Governed Bookkeeper",
+      "hymn": "Numbers that never sleep.",
+      "commercial_tier": "Growth",
+      "repo_module": "agents/bookkeeper",
+      "purpose": "Verify ledger entries, categorise transactions, reconcile, flag anomalies and produce audit trails.",
+      "action_classes_allowed": [
+        "READ_ONLY",
+        "DRAFT_INTERNAL",
+        "NOTIFY_THEN_ACT",
+        "APPROVE_THEN_ACT"
+      ],
+      "prohibited_actions": [
+        "payment.initiate",
+        "payment.release",
+        "bank_detail.change",
+        "statutory.filing",
+        "record.delete"
+      ],
+      "data_classes_allowed": [
+        "transaction_reference",
+        "amount",
+        "counterparty_name",
+        "ledger_account"
+      ],
+      "status": "active",
+      "runtime_governance": {
+        "zar_spend_cap_hourly": 0,
+        "zar_spend_cap_daily": 0,
+        "human_gates_required": [
+          "write_off",
+          "account_reallocation_over_5000",
+          "unreconciled_item_over_30_days"
+        ],
+        "kill_switch_active": true,
+        "disclosure_required": true
+      },
+      "review_owner": "Governance Lead",
+      "notes": "Never moves money. Prepares only."
+    },
+    "paperwork": {
+      "agent_id": "paperwork",
+      "agent_name": "Governed Paperwork",
+      "hymn": "Paperwork that files itself.",
+      "commercial_tier": "Growth",
+      "repo_module": "agents/paperwork",
+      "purpose": "Draft compliance documents, briefing memos, policies and correspondence from governed records.",
+      "action_classes_allowed": [
+        "READ_ONLY",
+        "DRAFT_INTERNAL",
+        "NOTIFY_THEN_ACT",
+        "APPROVE_THEN_ACT"
+      ],
+      "prohibited_actions": [
+        "statutory.filing",
+        "contract.sign",
+        "message.send_new_recipient",
+        "record.delete"
+      ],
+      "data_classes_allowed": [
+        "document_content",
+        "client_entity_name",
+        "matter_reference"
+      ],
+      "status": "active",
+      "runtime_governance": {
+        "zar_spend_cap_hourly": 0,
+        "zar_spend_cap_daily": 0,
+        "human_gates_required": [
+          "external_dispatch",
+          "statutory_or_regulatory_document",
+          "legal_correspondence"
+        ],
+        "kill_switch_active": true,
+        "disclosure_required": true
+      },
+      "review_owner": "Governance Lead",
+      "notes": "Drafts freely, dispatches only with approval."
+    },
+    "connector": {
+      "agent_id": "connector",
+      "agent_name": "Governed Connector",
+      "hymn": "Nothing retyped, nothing forgotten.",
+      "commercial_tier": "Growth",
+      "repo_module": "agents/connector",
+      "purpose": "Move records between approved internal systems, one system of record, verified at every hop.",
+      "action_classes_allowed": [
+        "READ_ONLY",
+        "NOTIFY_THEN_ACT",
+        "APPROVE_THEN_ACT"
+      ],
+      "prohibited_actions": [
+        "data.export_external",
+        "record.delete",
+        "vendor.integrate_new",
+        "bank_detail.change"
+      ],
+      "data_classes_allowed": [
+        "record_ids",
+        "field_values",
+        "system_identifiers"
+      ],
+      "status": "active",
+      "runtime_governance": {
+        "zar_spend_cap_hourly": 100,
+        "zar_spend_cap_daily": 500,
+        "human_gates_required": [
+          "new_system_integration",
+          "bulk_export_over_1000_records",
+          "personal_data_to_third_party"
+        ],
+        "kill_switch_active": true,
+        "disclosure_required": true
+      },
+      "review_owner": "Governance Lead",
+      "notes": "Integration allowlist required. No new vendor or endpoint without approval."
+    },
+    "inventory_supplier": {
+      "agent_id": "inventory_supplier",
+      "agent_name": "Inventory and Supplier Agent",
+      "hymn": "Shelves that order themselves.",
+      "commercial_tier": "Scale",
+      "repo_module": "agents/inventory_payroll",
+      "purpose": "Monitor stock thresholds, track suppliers and resources, raise draft purchase orders.",
+      "action_classes_allowed": [
+        "READ_ONLY",
+        "DRAFT_INTERNAL",
+        "NOTIFY_THEN_ACT",
+        "APPROVE_THEN_ACT"
+      ],
+      "prohibited_actions": [
+        "payment.initiate",
+        "supplier.bank_change",
+        "contract.sign",
+        "record.delete"
+      ],
+      "data_classes_allowed": [
+        "sku",
+        "quantity_on_hand",
+        "supplier_name",
+        "unit_cost"
+      ],
+      "status": "active",
+      "runtime_governance": {
+        "zar_spend_cap_hourly": 500,
+        "zar_spend_cap_daily": 2000,
+        "human_gates_required": [
+          "purchase_order_over_5000",
+          "new_supplier_onboarding",
+          "price_variance_over_10_percent"
+        ],
+        "kill_switch_active": true,
+        "disclosure_required": true
+      },
+      "review_owner": "Governance Lead",
+      "notes": "Draft POs under R5,000 may issue on notify; above that, approval required."
+    },
+    "payroll": {
+      "agent_id": "payroll",
+      "agent_name": "Payroll Assistant",
+      "hymn": "Payday, governed.",
+      "commercial_tier": "Scale",
+      "repo_module": "agents/inventory_payroll",
+      "purpose": "Prepare payroll computations, check variances, assemble payslips for human approval.",
+      "action_classes_allowed": [
+        "READ_ONLY",
+        "DRAFT_INTERNAL",
+        "NOTIFY_THEN_ACT",
+        "APPROVE_THEN_ACT"
+      ],
+      "prohibited_actions": [
+        "payment.initiate",
+        "payment.release",
+        "employee.bank_change",
+        "employee.discipline",
+        "record.delete"
+      ],
+      "data_classes_allowed": [
+        "employee_id",
+        "gross_pay",
+        "deductions",
+        "hours",
+        "leave_balance"
+      ],
+      "status": "active",
+      "runtime_governance": {
+        "zar_spend_cap_hourly": 0,
+        "zar_spend_cap_daily": 0,
+        "human_gates_required": [
+          "payroll_run_release",
+          "employee_bank_detail_change",
+          "termination_processing"
+        ],
+        "kill_switch_active": true,
+        "disclosure_required": true
+      },
+      "review_owner": "Governance Lead",
+      "notes": "Computes, never pays. Employee bank details are a human-only action."
+    },
+    "watchtower": {
+      "agent_id": "watchtower",
+      "agent_name": "The Watchtower",
+      "hymn": "Your business, briefed before you ask.",
+      "commercial_tier": "Scale",
+      "repo_module": "agents/watchtower",
+      "purpose": "Detect anomalies, monitor incidents, produce the 07:00 executive brief and escalate through human gates.",
+      "action_classes_allowed": [
+        "READ_ONLY",
+        "DRAFT_INTERNAL",
+        "NOTIFY_THEN_ACT"
+      ],
+      "prohibited_actions": [
+        "message.send_new_recipient",
+        "payment.initiate",
+        "record.delete",
+        "data.export_external",
+        "record.modify"
+      ],
+      "data_classes_allowed": [
+        "agent_events",
+        "incident_records",
+        "kpi_metrics",
+        "ledger_summaries"
+      ],
+      "status": "active",
+      "runtime_governance": {
+        "zar_spend_cap_hourly": 0,
+        "zar_spend_cap_daily": 0,
+        "human_gates_required": [
+          "severity_high_escalation",
+          "kill_switch_recommendation",
+          "agent_non_compliance"
+        ],
+        "kill_switch_active": true,
+        "disclosure_required": true
+      },
+      "review_owner": "Governance Lead",
+      "notes": "Read and notify only. May never modify a record. Produces the daily brief and feeds Active AI Defence."
+    },
+    "tender_scout": {
+      "agent_id": "tender_scout",
+      "agent_name": "Tender Scout",
+      "hymn": "Hymn pending lock.",
+      "commercial_tier": "Scale",
+      "repo_module": null,
+      "purpose": "Scan tender portals and notices, match opportunities to capability and margin, assemble bid packs for review.",
+      "action_classes_allowed": [
+        "READ_ONLY",
+        "DRAFT_INTERNAL",
+        "NOTIFY_THEN_ACT"
+      ],
+      "prohibited_actions": [
+        "tender.submit",
+        "contract.sign",
+        "payment.initiate",
+        "record.delete"
+      ],
+      "data_classes_allowed": [
+        "tender_reference",
+        "closing_date",
+        "scope_summary",
+        "estimated_value"
+      ],
+      "status": "canon_pending_module",
+      "runtime_governance": {
+        "zar_spend_cap_hourly": 0,
+        "zar_spend_cap_daily": 0,
+        "human_gates_required": [
+          "bid_pack_finalisation",
+          "tender_submission"
+        ],
+        "kill_switch_active": true,
+        "disclosure_required": true
+      },
+      "review_owner": "Governance Lead",
+      "notes": "Canon agent with no repo module yet. Gateway only. Never submits a tender."
+    }
+  },
+  "reconciliation_notes": {
+    "canon_vs_repo": "Canon lists eight agents; the repo currently has six modules because Inventory and Payroll share agents/inventory_payroll, and Tender Scout has no module yet.",
+    "action": "Inventory and Payroll are governed separately but share a module. Tender Scout is declared canon_pending_module and must not be described as deployed."
+  }
+}

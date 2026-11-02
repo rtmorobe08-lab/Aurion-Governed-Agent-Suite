@@ -2,7 +2,17 @@
 
 Governed, modular artificial intelligence agent infrastructure designed for secure multi-department operations, rigorous auditability, and automated compliance (aligned with POPIA and FICA standards).
 
+## ⚖️ Governance layer
+
+Every agent runs under a passport, inside published limits, on an append-only register.
+
+* `governance/GOVERNANCE_CHARTER.md` — the plain-language rules, written for clients, auditors and funders
+* `governance/governance_parameters.json` — the normative parameter set (tiers, caps, gates, retention)
+* `agents/<agent_id>/passport.json` — the papers each agent must carry
+* `governance/validate_governance.py` — fail-closed validator, run on every push
+
 ---
+
 
 ## 🏛️ System Architecture Overview
 

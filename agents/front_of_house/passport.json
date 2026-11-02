@@ -1,0 +1,57 @@
+{
+  "agent_id": "front_of_house",
+  "agent_name": "Governed Front of House",
+  "passport_version": "1.0",
+  "owner": "Aurion Enterprises (Pty) Ltd",
+  "purpose": "Answer every inbound call, engage the caller, capture details, promise and track callbacks.",
+  "status": "active",
+  "commercial_tier": "Starter",
+  "data_classes": [
+    "caller_name",
+    "caller_phone",
+    "caller_company",
+    "reason_for_call",
+    "callback_commitment"
+  ],
+  "allowed_actions": [
+    "READ_ONLY",
+    "DRAFT_INTERNAL",
+    "NOTIFY_THEN_ACT"
+  ],
+  "prohibited_actions": [
+    "price.quote",
+    "contract.issue",
+    "payment.initiate",
+    "data.export_external",
+    "record.delete",
+    "message.send_new_recipient"
+  ],
+  "approvers": [
+    "DIRECTOR"
+  ],
+  "runtime_governance": {
+    "kill_switch_active": true,
+    "kill_switch_max_seconds": 3,
+    "disclosure_required": true,
+    "human_gates_required": [
+      "callback_commitment_over_24h",
+      "quote_request",
+      "complaint_escalation"
+    ],
+    "zar_spend_cap_hourly": 0,
+    "zar_spend_cap_daily": 0,
+    "model_pinned": "TO_BE_RECORDED_AT_DEPLOYMENT",
+    "prompt_version": "TO_BE_RECORDED_AT_DEPLOYMENT"
+  },
+  "audit": {
+    "register_entry": "AUR-AGENT-FRONT_OF_HOUSE",
+    "retention_years": 5,
+    "logs_appended_only": true
+  },
+  "review": {
+    "owner_attestation": "monthly",
+    "governance_audit": "quarterly",
+    "last_reviewed": null
+  },
+  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
+}

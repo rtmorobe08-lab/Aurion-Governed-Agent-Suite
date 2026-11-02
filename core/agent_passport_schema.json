@@ -1,19 +1,165 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "AurionAgentPassport",
+  "version": "2.0",
   "type": "object",
+  "required": [
+    "agent_id",
+    "agent_name",
+    "passport_version",
+    "owner",
+    "purpose",
+    "status",
+    "commercial_tier",
+    "data_classes",
+    "allowed_actions",
+    "prohibited_actions",
+    "runtime_governance",
+    "audit",
+    "review"
+  ],
   "properties": {
-    "agent_id": { "type": "string" },
-    "agent_name": { "type": "string" },
-    "owner": { "type": "string" },
-    "purpose": { "type": "string" },
+    "agent_id": {
+      "type": "string",
+      "pattern": "^[a-z_]+$"
+    },
+    "agent_name": {
+      "type": "string"
+    },
+    "passport_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+$"
+    },
+    "owner": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string",
+      "minLength": 20
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "canon_pending_module",
+        "retired"
+      ]
+    },
+    "commercial_tier": {
+      "type": "string",
+      "enum": [
+        "Starter",
+        "Growth",
+        "Scale"
+      ]
+    },
+    "data_classes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "allowed_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "prohibited_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "approvers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "runtime_governance": {
       "type": "object",
+      "required": [
+        "kill_switch_active",
+        "disclosure_required",
+        "human_gates_required",
+        "zar_spend_cap_hourly",
+        "zar_spend_cap_daily"
+      ],
       "properties": {
-        "zar_spend_cap_hourly": { "type": "number" },
-        "human_gates_required": { "type": "array", "items": { "type": "string" } },
-        "kill_switch_active": { "type": "boolean" }
+        "kill_switch_active": {
+          "type": "boolean"
+        },
+        "kill_switch_max_seconds": {
+          "type": "number",
+          "maximum": 3
+        },
+        "disclosure_required": {
+          "type": "boolean"
+        },
+        "human_gates_required": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "zar_spend_cap_hourly": {
+          "type": "number",
+          "minimum": 0
+        },
+        "zar_spend_cap_daily": {
+          "type": "number",
+          "minimum": 0
+        },
+        "model_pinned": {
+          "type": "string"
+        },
+        "prompt_version": {
+          "type": "string"
+        }
       }
+    },
+    "audit": {
+      "type": "object",
+      "required": [
+        "register_entry",
+        "retention_years"
+      ],
+      "properties": {
+        "register_entry": {
+          "type": "string"
+        },
+        "retention_years": {
+          "type": "number",
+          "minimum": 5
+        },
+        "logs_appended_only": {
+          "type": "boolean"
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "required": [
+        "owner_attestation",
+        "governance_audit"
+      ],
+      "properties": {
+        "owner_attestation": {
+          "type": "string"
+        },
+        "governance_audit": {
+          "type": "string"
+        },
+        "last_reviewed": {
+          "type": "string"
+        }
+      }
+    },
+    "incident_contact": {
+      "type": "string"
     }
   }
 }

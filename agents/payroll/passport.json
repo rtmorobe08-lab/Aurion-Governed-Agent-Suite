@@ -1,0 +1,57 @@
+{
+  "agent_id": "payroll",
+  "agent_name": "Payroll Assistant",
+  "passport_version": "1.0",
+  "owner": "Aurion Enterprises (Pty) Ltd",
+  "purpose": "Prepare payroll computations, check variances, assemble payslips for human approval.",
+  "status": "active",
+  "commercial_tier": "Scale",
+  "data_classes": [
+    "employee_id",
+    "gross_pay",
+    "deductions",
+    "hours",
+    "leave_balance"
+  ],
+  "allowed_actions": [
+    "READ_ONLY",
+    "DRAFT_INTERNAL",
+    "NOTIFY_THEN_ACT",
+    "APPROVE_THEN_ACT"
+  ],
+  "prohibited_actions": [
+    "payment.initiate",
+    "payment.release",
+    "employee.bank_change",
+    "employee.discipline",
+    "record.delete"
+  ],
+  "approvers": [
+    "DIRECTOR"
+  ],
+  "runtime_governance": {
+    "kill_switch_active": true,
+    "kill_switch_max_seconds": 3,
+    "disclosure_required": true,
+    "human_gates_required": [
+      "payroll_run_release",
+      "employee_bank_detail_change",
+      "termination_processing"
+    ],
+    "zar_spend_cap_hourly": 0,
+    "zar_spend_cap_daily": 0,
+    "model_pinned": "TO_BE_RECORDED_AT_DEPLOYMENT",
+    "prompt_version": "TO_BE_RECORDED_AT_DEPLOYMENT"
+  },
+  "audit": {
+    "register_entry": "AUR-AGENT-PAYROLL",
+    "retention_years": 5,
+    "logs_appended_only": true
+  },
+  "review": {
+    "owner_attestation": "monthly",
+    "governance_audit": "quarterly",
+    "last_reviewed": null
+  },
+  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
+}

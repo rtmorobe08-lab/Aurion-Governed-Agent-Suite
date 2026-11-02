@@ -1,0 +1,55 @@
+{
+  "agent_id": "inventory_supplier",
+  "agent_name": "Inventory and Supplier Agent",
+  "passport_version": "1.0",
+  "owner": "Aurion Enterprises (Pty) Ltd",
+  "purpose": "Monitor stock thresholds, track suppliers and resources, raise draft purchase orders.",
+  "status": "active",
+  "commercial_tier": "Scale",
+  "data_classes": [
+    "sku",
+    "quantity_on_hand",
+    "supplier_name",
+    "unit_cost"
+  ],
+  "allowed_actions": [
+    "READ_ONLY",
+    "DRAFT_INTERNAL",
+    "NOTIFY_THEN_ACT",
+    "APPROVE_THEN_ACT"
+  ],
+  "prohibited_actions": [
+    "payment.initiate",
+    "supplier.bank_change",
+    "contract.sign",
+    "record.delete"
+  ],
+  "approvers": [
+    "DIRECTOR"
+  ],
+  "runtime_governance": {
+    "kill_switch_active": true,
+    "kill_switch_max_seconds": 3,
+    "disclosure_required": true,
+    "human_gates_required": [
+      "purchase_order_over_5000",
+      "new_supplier_onboarding",
+      "price_variance_over_10_percent"
+    ],
+    "zar_spend_cap_hourly": 500,
+    "zar_spend_cap_daily": 2000,
+    "model_pinned": "TO_BE_RECORDED_AT_DEPLOYMENT",
+    "prompt_version": "TO_BE_RECORDED_AT_DEPLOYMENT"
+  },
+  "audit": {
+    "register_entry": "AUR-AGENT-INVENTORY_SUPPLIER",
+    "retention_years": 5,
+    "logs_appended_only": true
+  },
+  "review": {
+    "owner_attestation": "monthly",
+    "governance_audit": "quarterly",
+    "last_reviewed": null
+  },
+  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
+}

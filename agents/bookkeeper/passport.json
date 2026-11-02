@@ -1,0 +1,56 @@
+{
+  "agent_id": "bookkeeper",
+  "agent_name": "Governed Bookkeeper",
+  "passport_version": "1.0",
+  "owner": "Aurion Enterprises (Pty) Ltd",
+  "purpose": "Verify ledger entries, categorise transactions, reconcile, flag anomalies and produce audit trails.",
+  "status": "active",
+  "commercial_tier": "Growth",
+  "data_classes": [
+    "transaction_reference",
+    "amount",
+    "counterparty_name",
+    "ledger_account"
+  ],
+  "allowed_actions": [
+    "READ_ONLY",
+    "DRAFT_INTERNAL",
+    "NOTIFY_THEN_ACT",
+    "APPROVE_THEN_ACT"
+  ],
+  "prohibited_actions": [
+    "payment.initiate",
+    "payment.release",
+    "bank_detail.change",
+    "statutory.filing",
+    "record.delete"
+  ],
+  "approvers": [
+    "DIRECTOR"
+  ],
+  "runtime_governance": {
+    "kill_switch_active": true,
+    "kill_switch_max_seconds": 3,
+    "disclosure_required": true,
+    "human_gates_required": [
+      "write_off",
+      "account_reallocation_over_5000",
+      "unreconciled_item_over_30_days"
+    ],
+    "zar_spend_cap_hourly": 0,
+    "zar_spend_cap_daily": 0,
+    "model_pinned": "TO_BE_RECORDED_AT_DEPLOYMENT",
+    "prompt_version": "TO_BE_RECORDED_AT_DEPLOYMENT"
+  },
+  "audit": {
+    "register_entry": "AUR-AGENT-BOOKKEEPER",
+    "retention_years": 5,
+    "logs_appended_only": true
+  },
+  "review": {
+    "owner_attestation": "monthly",
+    "governance_audit": "quarterly",
+    "last_reviewed": null
+  },
+  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
+}

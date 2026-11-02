@@ -1,0 +1,53 @@
+{
+  "agent_id": "connector",
+  "agent_name": "Governed Connector",
+  "passport_version": "1.0",
+  "owner": "Aurion Enterprises (Pty) Ltd",
+  "purpose": "Move records between approved internal systems, one system of record, verified at every hop.",
+  "status": "active",
+  "commercial_tier": "Growth",
+  "data_classes": [
+    "record_ids",
+    "field_values",
+    "system_identifiers"
+  ],
+  "allowed_actions": [
+    "READ_ONLY",
+    "NOTIFY_THEN_ACT",
+    "APPROVE_THEN_ACT"
+  ],
+  "prohibited_actions": [
+    "data.export_external",
+    "record.delete",
+    "vendor.integrate_new",
+    "bank_detail.change"
+  ],
+  "approvers": [
+    "DIRECTOR"
+  ],
+  "runtime_governance": {
+    "kill_switch_active": true,
+    "kill_switch_max_seconds": 3,
+    "disclosure_required": true,
+    "human_gates_required": [
+      "new_system_integration",
+      "bulk_export_over_1000_records",
+      "personal_data_to_third_party"
+    ],
+    "zar_spend_cap_hourly": 100,
+    "zar_spend_cap_daily": 500,
+    "model_pinned": "TO_BE_RECORDED_AT_DEPLOYMENT",
+    "prompt_version": "TO_BE_RECORDED_AT_DEPLOYMENT"
+  },
+  "audit": {
+    "register_entry": "AUR-AGENT-CONNECTOR",
+    "retention_years": 5,
+    "logs_appended_only": true
+  },
+  "review": {
+    "owner_attestation": "monthly",
+    "governance_audit": "quarterly",
+    "last_reviewed": null
+  },
+  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
+}

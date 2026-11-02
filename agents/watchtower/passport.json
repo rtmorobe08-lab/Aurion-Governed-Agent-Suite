@@ -1,0 +1,55 @@
+{
+  "agent_id": "watchtower",
+  "agent_name": "The Watchtower",
+  "passport_version": "1.0",
+  "owner": "Aurion Enterprises (Pty) Ltd",
+  "purpose": "Detect anomalies, monitor incidents, produce the 07:00 executive brief and escalate through human gates.",
+  "status": "active",
+  "commercial_tier": "Scale",
+  "data_classes": [
+    "agent_events",
+    "incident_records",
+    "kpi_metrics",
+    "ledger_summaries"
+  ],
+  "allowed_actions": [
+    "READ_ONLY",
+    "DRAFT_INTERNAL",
+    "NOTIFY_THEN_ACT"
+  ],
+  "prohibited_actions": [
+    "message.send_new_recipient",
+    "payment.initiate",
+    "record.delete",
+    "data.export_external",
+    "record.modify"
+  ],
+  "approvers": [
+    "DIRECTOR"
+  ],
+  "runtime_governance": {
+    "kill_switch_active": true,
+    "kill_switch_max_seconds": 3,
+    "disclosure_required": true,
+    "human_gates_required": [
+      "severity_high_escalation",
+      "kill_switch_recommendation",
+      "agent_non_compliance"
+    ],
+    "zar_spend_cap_hourly": 0,
+    "zar_spend_cap_daily": 0,
+    "model_pinned": "TO_BE_RECORDED_AT_DEPLOYMENT",
+    "prompt_version": "TO_BE_RECORDED_AT_DEPLOYMENT"
+  },
+  "audit": {
+    "register_entry": "AUR-AGENT-WATCHTOWER",
+    "retention_years": 5,
+    "logs_appended_only": true
+  },
+  "review": {
+    "owner_attestation": "monthly",
+    "governance_audit": "quarterly",
+    "last_reviewed": null
+  },
+  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
+}
