@@ -487,7 +487,7 @@
       "agent_name": "Tender Scout",
       "hymn": "Hymn pending lock.",
       "commercial_tier": "Scale",
-      "repo_module": null,
+      "repo_module": "agents/tender_scout",
       "purpose": "Scan tender portals and notices, match opportunities to capability and margin, assemble bid packs for review.",
       "action_classes_allowed": [
         "READ_ONLY",
@@ -506,7 +506,7 @@
         "scope_summary",
         "estimated_value"
       ],
-      "status": "canon_pending_module",
+      "status": "active",
       "runtime_governance": {
         "zar_spend_cap_hourly": 0,
         "zar_spend_cap_daily": 0,
@@ -518,11 +518,11 @@
         "disclosure_required": true
       },
       "review_owner": "Governance Lead",
-      "notes": "Canon agent with no repo module yet. Gateway only. Never submits a tender."
+      "notes": "Module built 2 Nov 2026: governed scanning, eligibility veto, value-band filter, bid-pack drafting. Submission and signature blocked in code. Router wiring pending (Gemini)."
     }
   },
   "reconciliation_notes": {
     "canon_vs_repo": "Canon lists eight agents; the repo currently has six modules because Inventory and Payroll share agents/inventory_payroll, and Tender Scout has no module yet.",
-    "action": "Inventory and Payroll are governed separately but share a module. Tender Scout is declared canon_pending_module and must not be described as deployed."
+    "action": "Inventory and Payroll are governed as separate agents but share the agents/inventory_payroll code module; the kill switch and caps are enforced per agent, not per module. Tender Scout now has its own module (agents/tender_scout). Pattern: one folder per agent for passport, tests and entrypoint; shared capability code stays in core/."
   }
 }

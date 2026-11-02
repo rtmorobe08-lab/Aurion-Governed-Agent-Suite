@@ -7,6 +7,23 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'core'))
 from master_router import AurionMasterRouter
 
 
+def run_module_tests():
+    """Per-agent test modules that the router does not dispatch."""
+    import subprocess
+    suites = [os.path.join("agents", "tender_scout", "test_tender_scout.py")]
+    failed = 0
+    for suite in suites:
+        if not os.path.exists(suite):
+            continue
+        print(f"[*] Running module tests: {suite}")
+        r = subprocess.run([sys.executable, suite], capture_output=True, text=True)
+        if r.returncode != 0:
+            print(r.stdout[-800:]); print(r.stderr[-400:]); failed += 1
+        else:
+            tail = [l for l in r.stdout.strip().splitlines() if l.strip()][-1:]
+            print("    " + (tail[0] if tail else "ok"))
+    return failed
+
 def run_governance_gate():
     """Fail-closed governance gate: the suite must satisfy its own parameters."""
     import subprocess
@@ -54,4 +71,6 @@ def run_suite_tests():
 
 if __name__ == "__main__":
     run_suite_tests()
-    sys.exit(run_governance_gate())
+    module_failures = run_module_tests()
+    gate = run_governance_gate()
+    sys.exit(1 if (gate or module_failures) else 0)

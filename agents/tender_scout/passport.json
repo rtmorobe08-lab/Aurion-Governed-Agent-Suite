@@ -4,7 +4,7 @@
   "passport_version": "1.0",
   "owner": "Aurion Enterprises (Pty) Ltd",
   "purpose": "Scan tender portals and notices, match opportunities to capability and margin, assemble bid packs for review.",
-  "status": "canon_pending_module",
+  "status": "active",
   "commercial_tier": "Scale",
   "data_classes": [
     "tender_reference",
@@ -36,8 +36,8 @@
     ],
     "zar_spend_cap_hourly": 0,
     "zar_spend_cap_daily": 0,
-    "model_pinned": "TO_BE_RECORDED_AT_DEPLOYMENT",
-    "prompt_version": "TO_BE_RECORDED_AT_DEPLOYMENT"
+    "model_pinned": "rule_based_v1_no_llm_required",
+    "prompt_version": "n/a_rule_based"
   },
   "audit": {
     "register_entry": "AUR-AGENT-TENDER_SCOUT",
@@ -47,7 +47,7 @@
   "review": {
     "owner_attestation": "monthly",
     "governance_audit": "quarterly",
-    "last_reviewed": null
+    "last_reviewed": "2026-11-02"
   },
   "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
 }
