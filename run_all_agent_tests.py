@@ -6,6 +6,25 @@ import json
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'core')))
 from master_router import AurionMasterRouter
 
+
+def run_governance_gate():
+    """Fail-closed governance gate: the suite must satisfy its own parameters."""
+    import subprocess
+    print("\n==================================================")
+    print("   GOVERNANCE GATE — VALIDATING AGENT PARAMETERS  ")
+    print("==================================================")
+    validator = os.path.join(os.path.dirname(os.path.abspath(__file__)), "governance", "validate_governance.py")
+    if not os.path.exists(validator):
+        print("BLOCKED: governance validator missing. An ungoverned suite must not pass.")
+        return 1
+    result = subprocess.run([sys.executable, validator], capture_output=True, text=True)
+    print(result.stdout.strip())
+    if result.returncode != 0:
+        print("BLOCKED: governance validation failed. Merge refused.")
+        return 1
+    print("GOVERNANCE GATE: PASSED")
+    return 0
+
 def run_suite_tests():
     router = AurionMasterRouter()
 
@@ -35,3 +54,4 @@ def run_suite_tests():
 
 if __name__ == "__main__":
     run_suite_tests()
+    sys.exit(run_governance_gate())
