@@ -49,5 +49,21 @@
     "governance_audit": "quarterly",
     "last_reviewed": "2026-11-02"
   },
-  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195"
+  "incident_contact": "Governance Lead \u00b7 +27 82 880 0195",
+  "permissions": {
+    "mode": "deny_by_default",
+    "may_modify_own_controls": false
+  },
+  "monitoring": {
+    "independent_monitor_required": true,
+    "divergence_action": "suspend_and_open_incident"
+  },
+  "evidence": {
+    "chain": "hash_chained_out_of_band",
+    "reconciled_per_incident": true
+  },
+  "assurance": {
+    "adversarial_test_battery": "required_before_go_live",
+    "attestation": "quarterly"
+  }
 }

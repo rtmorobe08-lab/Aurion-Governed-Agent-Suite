@@ -103,6 +103,30 @@ for aid, a in declared.items():
 for d in found_dirs:
     if d not in declared: warn(f"agent folder '{d}' has a passport but is not declared in governance parameters")
 
+# ---------- 3b. agent behaviour assurance (v1.1) ----------
+for key in ("permission_model","monitoring_independence","evidence_chain","adversarial_test_battery"):
+    if key not in g: err(f"global parameters missing '{key}' (agent behaviour assurance)")
+    else: ok("")
+if g.get("monitoring_independence",{}).get("architecture") != "two_lock":
+    err("monitoring must be two-lock: an independent monitor, not only an agent")
+for aid in declared:
+    pj = load(os.path.join(ROOT,"agents",aid,"passport.json"))
+    if pj.get("permissions",{}).get("mode") != "deny_by_default":
+        err(f"[{aid}] permission model is not deny-by-default")
+    if pj.get("permissions",{}).get("may_modify_own_controls") is not False:
+        err(f"[{aid}] agent may modify its own controls")
+    if pj.get("monitoring",{}).get("independent_monitor_required") is not True:
+        err(f"[{aid}] no independent monitor declared")
+    if pj.get("monitoring",{}).get("divergence_action") != "suspend_and_open_incident":
+        err(f"[{aid}] divergence from the independent log does not suspend the agent")
+    if pj.get("evidence",{}).get("chain") != "hash_chained_out_of_band":
+        err(f"[{aid}] evidence chain is not hash-chained and captured out of band")
+    if pj.get("evidence",{}).get("reconciled_per_incident") is not True:
+        err(f"[{aid}] agent account is not reconciled per incident")
+    if pj.get("assurance",{}).get("adversarial_test_battery") != "required_before_go_live":
+        err(f"[{aid}] adversarial test battery not required before go-live")
+ok("")
+
 # ---------- 4. register linkage ----------
 reg_path = os.path.join(ROOT,"core","assurance_register_schema.json")
 if os.path.exists(reg_path):
